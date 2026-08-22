@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { getAirbnbBlockUrl } from "@/lib/utils";
+import { notifyPaymentReceived } from "@/lib/notifications";
 
 export async function POST(
   request: Request,
@@ -62,6 +63,8 @@ export async function POST(
       status: method === "SPEI" ? "PENDIENTE" : "PENDIENTE",
     },
   });
+
+  notifyPaymentReceived(reservation.id, amount).catch(console.error);
 
   const airbnbBlockUrl = getAirbnbBlockUrl(
     reservation.checkIn,

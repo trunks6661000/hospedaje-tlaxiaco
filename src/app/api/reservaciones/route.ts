@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { calculateNights } from "@/lib/utils";
+import { notifyNewReservation } from "@/lib/notifications";
 import { z } from "zod";
 
 const reservationSchema = z.object({
@@ -100,6 +101,9 @@ export async function POST(request: Request) {
         propertyId: data.propertyId,
       },
     });
+
+    // Enviar notificaciones en background (no bloquear la respuesta)
+    notifyNewReservation(reservation.id).catch(console.error);
 
     return NextResponse.json(reservation, { status: 201 });
   } catch (error) {
