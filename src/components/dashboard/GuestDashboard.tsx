@@ -9,11 +9,10 @@ import {
   MapPin,
   Star,
   Users,
-  CreditCard,
   Clock,
   ChevronRight,
 } from "lucide-react";
-import { formatPrice, formatDate, formatShortDate, calculateNights } from "@/lib/utils";
+import { formatPrice, formatShortDate, calculateNights } from "@/lib/utils";
 
 interface GuestDashboardProps {
   userName: string;

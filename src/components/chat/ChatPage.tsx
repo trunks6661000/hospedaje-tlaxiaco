@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Send, MessageSquare, ArrowLeft, User } from "lucide-react";
-import { formatDate } from "@/lib/utils";
 
 interface Conversation {
   contact: { id: string; name: string; image: string | null };
@@ -24,7 +23,7 @@ interface ChatPageProps {
   userName: string;
 }
 
-export default function ChatPage({ userId, userName }: ChatPageProps) {
+export default function ChatPage({ userId }: ChatPageProps) {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedContact, setSelectedContact] = useState<Conversation["contact"] | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);

@@ -11,15 +11,12 @@ import {
   Star,
   Eye,
   Edit,
-  MoreVertical,
   Clock,
-  CheckCircle,
-  AlertCircle,
   Users,
   MapPin,
   ExternalLink,
 } from "lucide-react";
-import { formatPrice, formatDate, formatShortDate, getAirbnbBlockUrl } from "@/lib/utils";
+import { formatPrice, formatShortDate, getAirbnbBlockUrl } from "@/lib/utils";
 
 interface HostDashboardProps {
   properties: any[];
