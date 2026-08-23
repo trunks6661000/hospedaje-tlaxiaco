@@ -39,7 +39,7 @@ export default function WhatsAppBotManager({ initialFaqs }: WhatsAppBotManagerPr
     order: 0,
   });
 
-  const categories = [...new Set(faqs.map((f) => f.category))];
+  const categories = Array.from(new Set(faqs.map((f) => f.category)));
 
   async function handleCreate() {
     if (!form.question || !form.answer || !form.category) {

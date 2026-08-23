@@ -106,12 +106,12 @@ export async function GET(req: NextRequest) {
     distinct: ["senderId"],
   });
 
-  const contactIds = [
-    ...new Set([
+  const contactIds = Array.from(
+    new Set([
       ...sent.map((m) => m.receiverId),
       ...received.map((m) => m.senderId),
-    ]),
-  ];
+    ])
+  );
 
   const conversations = await Promise.all(
     contactIds.map(async (cId) => {

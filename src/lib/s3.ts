@@ -2,15 +2,22 @@ import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuid } from "uuid";
 
-const s3 = new S3Client({
-  region: process.env.AWS_REGION!,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
-});
+let _s3: S3Client | null = null;
 
-const BUCKET = process.env.AWS_S3_BUCKET!;
+function getS3() {
+  if (!_s3) {
+    _s3 = new S3Client({
+      region: process.env.AWS_REGION!,
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+      },
+    });
+  }
+  return _s3;
+}
+
+const BUCKET = process.env.AWS_S3_BUCKET || "";
 
 export async function getUploadUrl(
   folder: string,
@@ -25,7 +32,7 @@ export async function getUploadUrl(
     ContentType: contentType,
   });
 
-  const url = await getSignedUrl(s3, command, { expiresIn: 300 });
+  const url = await getSignedUrl(getS3(), command, { expiresIn: 300 });
 
   return { url, key };
 }
@@ -35,7 +42,7 @@ export async function deleteFromS3(key: string) {
     Bucket: BUCKET,
     Key: key,
   });
-  await s3.send(command);
+  await getS3().send(command);
 }
 
 export function getPublicUrl(key: string): string {

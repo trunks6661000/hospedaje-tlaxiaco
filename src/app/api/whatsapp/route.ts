@@ -65,7 +65,7 @@ async function findBotResponse(input: string): Promise<string> {
 
   // Si hay FAQs configuradas, mostrar menú
   if (faqs.length > 0) {
-    const categories = [...new Set(faqs.map((f) => f.category))];
+    const categories = Array.from(new Set(faqs.map((f) => f.category)));
     const menu = categories
       .map((cat) => {
         const items = faqs.filter((f) => f.category === cat);
