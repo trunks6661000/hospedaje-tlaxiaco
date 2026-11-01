@@ -1,37 +1,34 @@
 import Link from "next/link";
-import { Home, MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-900 text-neutral-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-neutral-900 text-neutral-400">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                <Home className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-white font-semibold">
-                Hospedaje Tlaxiaco
-              </span>
-            </div>
-            <p className="text-sm text-neutral-400 leading-relaxed">
-              Encuentra el mejor hospedaje en Santiago Tlaxiaco, Oaxaca.
-              Casas, cabañas y habitaciones en el corazón de la Mixteca.
+            <span className="text-2xl font-serif tracking-wide text-white">
+              GUETZA
+            </span>
+            <p className="text-sm text-neutral-500 mt-3 leading-relaxed">
+              Hospedaje curado en Santiago Tlaxiaco, Oaxaca. Cada espacio es
+              seleccionado por su calidez, ubicación y autenticidad.
             </p>
           </div>
 
-          {/* Links */}
+          {/* Explorar */}
           <div>
-            <h3 className="text-white font-medium mb-4">Explorar</h3>
-            <ul className="space-y-2.5 text-sm">
+            <h3 className="text-white text-sm font-medium mb-4 tracking-wide uppercase">
+              Explorar
+            </h3>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/propiedades"
                   className="hover:text-white transition-colors"
                 >
-                  Todos los hospedajes
+                  Hospedajes
                 </Link>
               </li>
               <li>
@@ -63,14 +60,16 @@ export default function Footer() {
 
           {/* Anfitriones */}
           <div>
-            <h3 className="text-white font-medium mb-4">Anfitriones</h3>
-            <ul className="space-y-2.5 text-sm">
+            <h3 className="text-white text-sm font-medium mb-4 tracking-wide uppercase">
+              Anfitriones
+            </h3>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/anfitrion"
                   className="hover:text-white transition-colors"
                 >
-                  Sé anfitrión
+                  Publica tu espacio
                 </Link>
               </li>
               <li>
@@ -92,41 +91,43 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contacto */}
           <div>
-            <h3 className="text-white font-medium mb-4">Contacto</h3>
-            <ul className="space-y-2.5 text-sm">
+            <h3 className="text-white text-sm font-medium mb-4 tracking-wide uppercase">
+              Contacto
+            </h3>
+            <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-neutral-500 flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-neutral-600 flex-shrink-0" />
                 Santiago Tlaxiaco, Oaxaca
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-neutral-500 flex-shrink-0" />
+                <Phone className="w-4 h-4 text-neutral-600 flex-shrink-0" />
                 +52 951 000 0000
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-neutral-500 flex-shrink-0" />
-                contacto@hospedajetlaxiaco.com
+                <Mail className="w-4 h-4 text-neutral-600 flex-shrink-0" />
+                hola@guetza.mx
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-neutral-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-neutral-500">
-            © 2026 Hospedaje Tlaxiaco. Todos los derechos reservados.
+        <div className="border-t border-neutral-800 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-neutral-600">
+            &copy; 2026 Guetza. Todos los derechos reservados.
           </p>
-          <div className="flex gap-6 text-xs text-neutral-500">
+          <div className="flex gap-6 text-xs text-neutral-600">
             <Link
               href="/terminos"
-              className="hover:text-neutral-300 transition-colors"
+              className="hover:text-neutral-400 transition-colors"
             >
               Términos
             </Link>
             <Link
               href="/privacidad"
-              className="hover:text-neutral-300 transition-colors"
+              className="hover:text-neutral-400 transition-colors"
             >
               Privacidad
             </Link>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -12,26 +12,32 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const dmSerif = DM_Serif_Display({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-dm-serif",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "Hospedaje Tlaxiaco — Hospedaje en el corazón de la Mixteca",
-    template: "%s | Hospedaje Tlaxiaco",
+    default: "Guetza — Hospedaje en el corazón de la Mixteca",
+    template: "%s | Guetza",
   },
   description:
-    "Encuentra el mejor hospedaje en Santiago Tlaxiaco, Oaxaca. Casas, cabañas y habitaciones auténticas en la Mixteca oaxaqueña.",
+    "Encuentra hospedaje auténtico en Santiago Tlaxiaco, Oaxaca. Casas, cabañas y habitaciones curadas en la Mixteca oaxaqueña.",
   keywords: [
+    "guetza",
     "hospedaje tlaxiaco",
     "hospedaje oaxaca",
     "cabañas tlaxiaco",
     "hotel tlaxiaco",
-    "airbnb tlaxiaco",
     "mixteca oaxaqueña",
     "santiago tlaxiaco",
   ],
   openGraph: {
-    title: "Hospedaje Tlaxiaco",
+    title: "Guetza — Hospedaje auténtico en Tlaxiaco",
     description:
-      "Encuentra el mejor hospedaje en Santiago Tlaxiaco, Oaxaca.",
+      "Hospedaje curado en Santiago Tlaxiaco, Oaxaca. Vive la Mixteca.",
     type: "website",
     locale: "es_MX",
   },
@@ -44,7 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body
+        className={`${inter.variable} ${dmSerif.variable} font-sans antialiased`}
+      >
         <AuthProvider>
           <Toaster position="top-center" />
           <div className="min-h-screen flex flex-col">

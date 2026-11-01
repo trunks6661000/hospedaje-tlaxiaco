@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-
 :root {
-  --background: #ffffff;
-  --foreground: #1C1917;
+  --background: #FDFCFA;
+  --foreground: #1A1714;
 }
 
 body {
@@ -28,22 +26,26 @@ body {
 
   .btn-secondary {
     @apply bg-white text-neutral-800 px-6 py-3 rounded-lg font-medium
-           border border-neutral-300 hover:bg-neutral-50 transition-colors duration-200;
+           border border-neutral-300 hover:bg-warm-100 transition-colors duration-200;
   }
 
   .btn-ghost {
     @apply text-neutral-600 px-4 py-2 rounded-lg font-medium
-           hover:bg-neutral-100 transition-colors duration-200;
+           hover:bg-warm-100 transition-colors duration-200;
   }
 
   .input-field {
     @apply w-full px-4 py-3 border border-neutral-300 rounded-lg
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
-           placeholder:text-neutral-400 text-neutral-800;
+           focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent
+           placeholder:text-neutral-400 text-neutral-800 bg-white;
   }
 
   .card {
     @apply bg-white rounded-xl border border-neutral-200 overflow-hidden
            hover:shadow-lg transition-shadow duration-300;
+  }
+
+  .heading-serif {
+    @apply font-serif tracking-tight;
   }
 }
