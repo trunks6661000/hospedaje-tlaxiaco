@@ -53,6 +53,10 @@ model User {
   password      String?
   role          UserRole  @default(HUESPED)
   bio           String?
+  mpAccessToken  String?  @db.Text
+  mpRefreshToken String?  @db.Text
+  mpUserId       String?
+  mpConnected    Boolean  @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 

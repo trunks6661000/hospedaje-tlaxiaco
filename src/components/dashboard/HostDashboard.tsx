@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -15,8 +15,13 @@ import {
   Users,
   MapPin,
   ExternalLink,
+  CreditCard,
+  CheckCircle2,
+  XCircle,
+  Loader2,
 } from "lucide-react";
 import { formatPrice, formatShortDate, getAirbnbBlockUrl } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 interface HostDashboardProps {
   properties: any[];
@@ -32,6 +37,39 @@ export default function HostDashboard({
   const [activeTab, setActiveTab] = useState<"propiedades" | "reservaciones">(
     "reservaciones"
   );
+  const [mpConnected, setMpConnected] = useState<boolean | null>(null);
+  const [mpLoading, setMpLoading] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/mercadopago/status")
+      .then((r) => r.json())
+      .then((data) => setMpConnected(data.connected))
+      .catch(() => setMpConnected(false));
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("mp_success") === "true") {
+      toast.success("Mercado Pago conectado exitosamente");
+      setMpConnected(true);
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+    if (params.get("mp_error")) {
+      toast.error("Error al conectar Mercado Pago. Intenta de nuevo.");
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }, []);
+
+  const handleDisconnectMP = async () => {
+    if (!confirm("¿Desconectar tu cuenta de Mercado Pago?")) return;
+    setMpLoading(true);
+    try {
+      await fetch("/api/mercadopago/disconnect", { method: "POST" });
+      setMpConnected(false);
+      toast.success("Mercado Pago desconectado");
+    } catch {
+      toast.error("Error al desconectar");
+    }
+    setMpLoading(false);
+  };
 
   const activeReservations = reservations.filter(
     (r) => r.status === "CONFIRMADA" || r.status === "EN_CURSO"
@@ -57,6 +95,56 @@ export default function HostDashboard({
           <Plus className="w-4 h-4" />
           Nueva propiedad
         </Link>
+      </div>
+
+      {/* Mercado Pago Connection */}
+      <div className="bg-white border border-neutral-200 rounded-xl p-5 mb-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+              <CreditCard className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-neutral-900">
+                Mercado Pago
+              </h3>
+              <p className="text-xs text-neutral-500">
+                {mpConnected === null
+                  ? "Verificando..."
+                  : mpConnected
+                  ? "Conectado — los huéspedes pueden pagarte directo"
+                  : "Conecta tu cuenta para recibir pagos"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {mpConnected === null ? (
+              <Loader2 className="w-4 h-4 text-neutral-400 animate-spin" />
+            ) : mpConnected ? (
+              <>
+                <span className="flex items-center gap-1 text-xs text-green-700 bg-green-50 px-2.5 py-1 rounded-full">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Conectado
+                </span>
+                <button
+                  onClick={handleDisconnectMP}
+                  disabled={mpLoading}
+                  className="text-xs text-neutral-500 hover:text-red-600 px-2 py-1 transition-colors"
+                >
+                  Desconectar
+                </button>
+              </>
+            ) : (
+              <a
+                href="/api/mercadopago/connect"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+              >
+                <CreditCard className="w-4 h-4" />
+                Conectar Mercado Pago
+              </a>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Stats */}

@@ -65,6 +65,25 @@ export default function PaymentPage() {
   const handlePayment = async () => {
     setProcessing(true);
     try {
+      if (method === "TARJETA" || method === "OXXO") {
+        const mpRes = await fetch("/api/mercadopago/create-preference", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reservationId: params.id }),
+        });
+
+        const mpData = await mpRes.json();
+
+        if (!mpRes.ok) {
+          toast.error(mpData.error);
+          setProcessing(false);
+          return;
+        }
+
+        window.location.href = mpData.init_point;
+        return;
+      }
+
       const res = await fetch(`/api/reservaciones/${params.id}/pagar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -81,12 +100,7 @@ export default function PaymentPage() {
         return;
       }
 
-      if (method === "SPEI") {
-        toast.success("Reservación confirmada. Realiza la transferencia SPEI.");
-      } else {
-        toast.success("Pago procesado");
-      }
-
+      toast.success("Reservación confirmada. Realiza la transferencia SPEI.");
       router.push(`/reservacion/${params.id}/confirmacion`);
     } catch {
       toast.error("Error al procesar el pago");
@@ -227,7 +241,7 @@ export default function PaymentPage() {
                     Tarjeta de crédito / débito
                   </p>
                   <p className="text-sm text-neutral-500">
-                    Visa, Mastercard, Amex
+                    Visa, Mastercard, Amex — vía Mercado Pago
                   </p>
                 </div>
                 <div
@@ -258,7 +272,7 @@ export default function PaymentPage() {
                 <div className="flex-1">
                   <p className="font-medium text-neutral-900">OXXO</p>
                   <p className="text-sm text-neutral-500">
-                    Paga en efectivo en tu OXXO más cercano
+                    Paga en efectivo — vía Mercado Pago
                   </p>
                 </div>
                 <div
